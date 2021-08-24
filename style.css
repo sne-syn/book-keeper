@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla&display=swap');
+
+:root {
+  --primary-color: #C8A7FB;
+  --border-radius: 5px;
+}
 
 html {
   box-sizing: border-box;
@@ -6,4 +12,24 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: var(--primary-color);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ffffff' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+  font-family: Karla, sans-serif;
+}
+
+h1 {
+  color: #FFF;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  width: 275px;
+  margin: 20px auto 10px;
+  user-select: none;
+}
+
+h1:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
