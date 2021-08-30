@@ -17,6 +17,13 @@ body {
   font-family: Karla, sans-serif;
 }
 
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
 h1 {
   color: #FFF;
   padding: 20px;

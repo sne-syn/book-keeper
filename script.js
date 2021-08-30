@@ -8,6 +8,8 @@ const bookmarksContainer = document.getElementById('bookmarks-container');
 
 const ESC_KEY = 27;
 
+let bookmarks = [];
+
 // Show Modal, Focus on Input
 const showModal = () => {
   modal.classList.add('show-modal');
@@ -49,6 +51,51 @@ const validateUrl = (nameValue, urlValue) => {
   return true;
 }
 
+// Build Bookmarks DOM
+const buildBookmarks = () => {
+  bookmarks.forEach((bookmark) => {
+    const {name, url} = bookmark;
+    const item = document.createElement('li');
+    item.classList.add('item');
+    const closeIcon = document.createElement('i');
+    closeIcon.classList.add('fas', 'fa-times');
+    closeIcon.setAttribute('title', 'Delete Bookmark');
+    closeIcon.setAttribute('onclick', `deleteBookmark('${url}')`);
+    const linkInfo = document.createElement('div');
+    linkInfo.classList.add('name');
+    // Favicon
+    const favicon = document.createElement('img');
+    favicon.setAttribute('src', `https://s2.googleusercontent.com/s2/favicons?domain=${url}`);
+    favicon.setAttribute('alt', 'Favicon');
+    // Link
+    const link = document.createElement('a');
+    link.setAttribute('href', `${url}`);
+    link.setAttribute('target', '_blank');
+    link.textContent = name;
+
+    // Append to bookmarks container
+    linkInfo.append(favicon, link);
+    item.append(closeIcon, linkInfo);
+    bookmarksContainer.appendChild(item);
+  })
+};
+
+const fetchBookmarks = () => {
+  if (localStorage.getItem('bookmarks')) {
+    bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+  } else {
+    bookmarks = [
+      {
+        name: 'Anadea',
+        url: 'https://anadea.info',
+      }
+    ];
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  }
+
+  buildBookmarks();
+}
+
 const storeBookmark = (evt) => {
   evt.preventDefault();
   const nameValue = websiteNameElement.value;
@@ -60,6 +107,17 @@ const storeBookmark = (evt) => {
   if (!validateUrl(nameValue, urlValue)) {
     return false;
   }
+
+  const bookmark = {
+    name: nameValue,
+    url: urlValue,
+  };
+  bookmarks.push(bookmark);
+  localStorage.setItem('bookmarks',  JSON.stringify(bookmarks));
+  fetchBookmarks();
+  bookmarkForm.reset();
+  websiteNameElement.focus();
 }
 // Event Listener
 bookmarkForm.addEventListener('submit', storeBookmark);
+fetchBookmarks();
