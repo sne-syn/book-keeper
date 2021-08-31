@@ -53,6 +53,7 @@ const validateUrl = (nameValue, urlValue) => {
 
 // Build Bookmarks DOM
 const buildBookmarks = () => {
+  bookmarksContainer.textContent = '';
   bookmarks.forEach((bookmark) => {
     const {name, url} = bookmark;
     const item = document.createElement('li');
@@ -92,8 +93,19 @@ const fetchBookmarks = () => {
     ];
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
   }
-
   buildBookmarks();
+}
+
+// Delete Bookmark
+
+const deleteBookmark = (url) => {
+  bookmarks.forEach((bookmark, index) => {
+    if (bookmark.url === url) {
+      bookmarks.splice(index, 1);
+    };
+  });
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  fetchBookmarks();
 }
 
 const storeBookmark = (evt) => {
